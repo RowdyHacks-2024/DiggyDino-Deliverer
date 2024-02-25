@@ -7,6 +7,13 @@
             "driver": "SQLite",
             "name": "DinoDb",
             "database": "${workspaceFolder:DiggyDino-Deliverer}/dino.db"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "connectString": "postgres://default:vxaGPUg3pzh4@ep-muddy-forest-a5qrasra.us-east-2.aws.neon.tech:5432/verceldb?sslmode=require",
+            "name": "Vercel DinoDb"
         }
     ],
     "sqltools.useNodeRuntime": true

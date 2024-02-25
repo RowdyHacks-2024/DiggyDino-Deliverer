@@ -11,9 +11,14 @@ schema {
 
 type Query {
 
-    user(user_id: String): [UserResult]!
-    detector: [DetectorResult]!
-    prediction: [PredictionResult]!
+    get_user(user_id: String!): UserResult
+    get_detector(detector_id: String!): DetectorResult!
+    get_prediction(prediction_id: String!): PredictionResult!
+    get_sample(sample_id: String!): SampleResult!
+
+    get_detectors_by_user_id(user_id: String!): [DetectorResult]!
+    get_predictions_by_user_id(user_id: String!): [DetectorResult]!
+    get_samples_by_user_id(user_id: String!): [DetectorResult]!
 
 }
 
@@ -22,6 +27,18 @@ type Mutation {
     add_user(user: UserInput!): UserResult!
     update_user(user: UserInput!): UserResult!
     delete_user(user_id: String!): DeletionResult!
+
+    add_detector(detector: DetectorInput!): DetectorResult!
+    update_detector(detector: DetectorInput!): DetectorResult!
+    delete_detector(detector_id: String!): DeletionResult!
+
+    add_sample(sample: SampleInput!): SampleResult!
+    update_sample(sample: SampleInput!): SampleResult!
+    delete_sample(sample_id: String!): DeletionResult!
+
+    add_prediction(prediction: PredictionInput!): PredictionResult!
+    update_prediction(prediction: PredictionInput!): PredictionResult!
+    delete_prediction(prediction_id: String!): DeletionResult!
 
 }
 
@@ -43,7 +60,12 @@ input DetectorInput {
 
 input SampleInput {
 
-
+    user_id: String!
+    longitude: Float!
+    latitude: Float!
+    temperature: Float!
+    barametric_pressure: Float!
+    Altitude: Float!
 
 }
 
@@ -76,14 +98,13 @@ type DetectorResult {
     success: Boolean!
     errors: [String]
     detector: Detector
-
 }
-
+    
 type SampleResult {
 
     success: Boolean!
     errors: [String]
-    sampe: Sample
+    sample: Sample
 
 }
 
@@ -94,6 +115,7 @@ type PredictionResult {
     prediction: Prediction
 
 }
+
 
 # ---Tables---
 
@@ -127,6 +149,7 @@ type Prediction {
 
 type Sample {
 
+    user_id: String!
     coordinates: Coordinate!
     climate: Climate!
 

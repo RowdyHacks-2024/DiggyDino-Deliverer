@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "717d7fc707d795dd32e0249e7a8cb616718e8a65f6491581ebf04f6e9948f389"
+            "sha256": "9de0f976835e3d17433bf215db9c04e6e4d8b9379b36b3e11f6bba519fe6a61c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -171,6 +171,15 @@
             "markers": "platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32')))))",
             "version": "==3.0.3"
         },
+        "gunicorn": {
+            "hashes": [
+                "sha256:3213aa5e8c24949e792bcacfc176fef362e7aac80b76c56f6b5122bf350722f0",
+                "sha256:88ec8bff1d634f98e61b9f65bc4bf3cd918a90806c6f5c48bc5603849ec81033"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.5'",
+            "version": "==21.2.0"
+        },
         "h11": {
             "hashes": [
                 "sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d",
@@ -277,12 +286,13 @@
             "markers": "python_version >= '3.7'",
             "version": "==2.1.5"
         },
-        "pysqlite3": {
+        "packaging": {
             "hashes": [
-                "sha256:0abc1756e8b39bd51c303e8fac37497ccaccc7b237c89fe3cf47ee8e614c590b"
+                "sha256:048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5",
+                "sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"
             ],
-            "index": "pypi",
-            "version": "==0.5.2"
+            "markers": "python_version >= '3.7'",
+            "version": "==23.2"
         },
         "python-dotenv": {
             "hashes": [
@@ -380,6 +390,15 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==0.27.1"
+        },
+        "waitress": {
+            "hashes": [
+                "sha256:005da479b04134cdd9dd602d1ee7c49d79de0537610d653674cc6cbde222b8a1",
+                "sha256:2a06f242f4ba0cc563444ca3d1998959447477363a2d7e9b8b4d75d35cfd1669"
+            ],
+            "index": "pypi",
+            "markers": "python_full_version >= '3.8.0'",
+            "version": "==3.0.0"
         },
         "werkzeug": {
             "hashes": [

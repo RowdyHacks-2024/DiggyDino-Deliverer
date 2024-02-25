@@ -3,7 +3,7 @@ from . import db
 class Users(db.Model):
     __tablename__ = 'Users'
     
-    user_id: str = db.Column('UserId', db.String, nullable=False, primary_key=True)
+    user_id: str = db.Column('UserID', db.String, nullable=False, primary_key=True)
     email: str = db.Column('Email', db.String)
     
     def to_dict(self):
@@ -48,6 +48,7 @@ class Samples(db.Model):
     sample_id: int = db.Column('SampleID', db.Integer, nullable=False, primary_key=True)
     longitude: float = db.Column('Longitude', db.Float, nullable=False)
     latitude: float = db.Column('Latitude', db.Float, nullable=False)
+    temperature: float = db.Column('Temperature', db.Float, nullable=False)
     barametric_pressure: float = db.Column('BarametricPressure', db.Float, nullable=False)
     altitude: float = db.Column('Alitude', db.Float, nullable=False)
 
@@ -59,6 +60,7 @@ class Samples(db.Model):
             'sample_id': self.sample_id,
             'longitude': self.longitude,
             'latitude': self.latitude,
+            'temperature': self.temperature,
             'barametric_pressure': self.barametric_pressure,
             'altitude': self.altitude
         }

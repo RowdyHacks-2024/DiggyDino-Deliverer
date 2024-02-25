@@ -7,7 +7,3 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{getcwd()}/{getenv("SQLITE_D
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-
-@app.route('/')
-def hello():
-    return 'hello'
