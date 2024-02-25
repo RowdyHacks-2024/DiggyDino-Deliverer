@@ -16,7 +16,13 @@ with app.app_context():
     db.create_all()
 
 query = ObjectType("Query")
+
 query.set_field("user", resolvers.resolve_add_user)
+
+mutation = ObjectType("Mutation")
+mutation.set_field("add_user", resolvers.resolve_add_user)
+mutation.set_field("update_user", resolvers.resolve_add_user)
+mutation.set_field("delete_user", resolvers.resolve_add_user)
 
 type_defs = load_schema_from_path("schema.gql")
 schema = make_executable_schema(

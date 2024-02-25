@@ -21,7 +21,7 @@ type Mutation {
 
     add_user(user: User): UserResult!
     delete_user(user_id: String!): UserResult!
-    update_user()
+    update_user(user: User): UserResult!
 }
 
 #---Results---
