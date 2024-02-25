@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c0ca972fa2fbff202661127143fbe862035c351cc7fe42ee5e6eb5bd035bb398"
+            "sha256": "717d7fc707d795dd32e0249e7a8cb616718e8a65f6491581ebf04f6e9948f389"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -277,6 +277,13 @@
             "markers": "python_version >= '3.7'",
             "version": "==2.1.5"
         },
+        "pysqlite3": {
+            "hashes": [
+                "sha256:0abc1756e8b39bd51c303e8fac37497ccaccc7b237c89fe3cf47ee8e614c590b"
+            ],
+            "index": "pypi",
+            "version": "==0.5.2"
+        },
         "python-dotenv": {
             "hashes": [
                 "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca",
@@ -362,7 +369,7 @@
                 "sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783",
                 "sha256:af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"
             ],
-            "markers": "python_version >= '3.8'",
+            "markers": "python_version < '3.11'",
             "version": "==4.9.0"
         },
         "uvicorn": {
