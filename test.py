@@ -1,4 +1,7 @@
 from inspect import getmembers, isroutine
+from src.main import db
+
+db.create_all()
 
 class MyClass(object):
     a = '12'

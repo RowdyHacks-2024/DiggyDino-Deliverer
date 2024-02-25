@@ -12,20 +12,29 @@ schema {
 type Query {
 
     user: [UserResult]!
+    detector: [DetectorResult]!
+    prediction: [PredictionResult]!
 
 }
 
 type Mutation {
 
-    add_user()
-
+    add_user(user: User): UserResult!
+    delete_user(user_id: String!): UserResult!
+    update_user()
 }
 
 #---Results---
 
+type DeletionResult {
+
+    success: Boolean!
+    errors: [String]
+}
+
 type UserResult {
 
-    success: boolean!
+    success: Boolean!
     errors: [String]
     user: User
 
@@ -33,7 +42,7 @@ type UserResult {
 
 type DetectorResult {
 
-    success: boolean!
+    success: Boolean!
     errors: [String]
     user: User
 
@@ -41,7 +50,7 @@ type DetectorResult {
 
 type PredictionResult {
 
-    success: boolean!
+    success: Boolean!
     errors: [String]
     user: User
 
@@ -51,8 +60,7 @@ type PredictionResult {
 
 type User {
     
-    user_id: Integer!
-    username: String!
+    user_id: String!
     email: String!
     
     detectors: [Detector]
@@ -63,16 +71,16 @@ type User {
 
 type Detector {
 
-    user_id: Integer!
-    detector_id: Integer!
+    user_id: String!
+    detector_id: Int!
     detector_name: String!
 
 }
 
 type Prediction {
 
-    user_id: Integer!
-    prediction_id: Integer!
+    user_id: String!
+    prediction_id: Int!
 
     is_valid: Boolean!
     sample_set: [Sample]!

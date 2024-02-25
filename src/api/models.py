@@ -1,29 +1,24 @@
-from ast import Tuple
-from . import db
-from typing import Any, Dict, List
-from inspect import getmembers, isroutine
+from main import db
 
 class Users(db.Model):
     __tablename__ = 'Users'
     
-    user_id: int = db.Column('UserId', db.Integer, primary_key=True)
-    user_name: int = db.Column('UserName', db.String)
+    user_id: str = db.Column('UserId', db.String, nullable=False, primary_key=True)
     email: str = db.Column('Email', db.String)
     
     def to_dict(self):
         return {
             'user_id': self.user_id,
-            'user_name': self.user_name,
             'email': self.email
         }
 
 class Detectors(db.Model):
     __tablename__ = 'Detectors'
     
-    detector_id: int = db.Column('DetectorID', db.Integer, primary_key=True)
-    detector_name: str = db.Column('DetectorName', db.String)
+    detector_id: int = db.Column('DetectorID', db.Integer, nullable=False, primary_key=True)
+    detector_name: str = db.Column('DetectorName', db.String, nullable=False)
     
-    user_id: int = db.Column(db.ForeignKey('Users.UserID'))
+    user_id: str = db.Column(db.ForeignKey('Users.UserID'))
     
     def to_dict(self):
         return {
@@ -35,10 +30,10 @@ class Detectors(db.Model):
 class Predictions(db.Model):
     __tablename__ = 'Predictions'
     
-    prediction_id: int = db.Column('PredictionID', db.Integer, primary_key=True)
-    is_valid: bool = db.Column('IsValid', db.Boolean)
+    prediction_id: int = db.Column('PredictionID', db.Integer, nullable=False, primary_key=True)
+    is_valid: bool = db.Column('IsValid', db.Boolean, nullable=False)
     
-    user_id: int = db.Column(db.ForeignKey('Users.UserID'))
+    user_id: str = db.Column(db.ForeignKey('Users.UserID'))
     
     def to_dict(self):
         return {
@@ -50,13 +45,13 @@ class Predictions(db.Model):
 class Samples(db.Model):
     __tablename__ = 'Samples'
     
-    sample_id: int = db.Column('SampleID', db.Integer, primary_key=True)
-    longitude: float = db.Column('Longitude', db.Float)
-    latitude: float = db.Column('Latitude', db.Float)
-    barametric_pressure: float = db.Column('BarametricPressure', db.Float)
-    altitude: float = db.Column('Alitude', db.Float)
+    sample_id: int = db.Column('SampleID', db.Integer, nullable=False, primary_key=True)
+    longitude: float = db.Column('Longitude', db.Float, nullable=False)
+    latitude: float = db.Column('Latitude', db.Float, nullable=False)
+    barametric_pressure: float = db.Column('BarametricPressure', db.Float, nullable=False)
+    altitude: float = db.Column('Alitude', db.Float, nullable=False)
 
-    user_id: int = db.Column(db.ForeignKey('Users.UserID'))
+    user_id: str = db.Column(db.ForeignKey('Users.UserID'))
     
     def to_dict(self):
         return {
