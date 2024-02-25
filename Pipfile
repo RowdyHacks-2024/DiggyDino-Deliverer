@@ -17,4 +17,4 @@ python-dotenv = "*"
 python_version = "2.7"
 
 [scripts]
-start_api = "uvicorn src.main:app --interface wsgi"
+start_api = "uvicorn src.main:app"

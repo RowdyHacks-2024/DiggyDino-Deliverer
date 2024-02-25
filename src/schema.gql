@@ -11,7 +11,7 @@ schema {
 
 type Query {
 
-    user: [UserResult]!
+    user(user_id: String): [UserResult]!
     detector: [DetectorResult]!
     prediction: [PredictionResult]!
 
@@ -19,9 +19,40 @@ type Query {
 
 type Mutation {
 
-    add_user(user: User): UserResult!
-    delete_user(user_id: String!): UserResult!
-    update_user(user: User): UserResult!
+    add_user(user: UserInput!): UserResult!
+    update_user(user: UserInput!): UserResult!
+    delete_user(user_id: String!): DeletionResult!
+
+}
+
+#---Inputs---
+
+input UserInput {
+
+    user_id: String!
+    email: String!
+
+}
+
+input DetectorInput {
+
+    user_id: String!
+    detector_id: Int!
+
+}
+
+input SampleInput {
+
+
+
+}
+
+input PredictionInput {
+
+    user_id: String!
+    prediction_id: Int!
+    is_valid: Boolean!
+
 }
 
 #---Results---
@@ -44,7 +75,15 @@ type DetectorResult {
 
     success: Boolean!
     errors: [String]
-    user: User
+    detector: Detector
+
+}
+
+type SampleResult {
+
+    success: Boolean!
+    errors: [String]
+    sampe: Sample
 
 }
 
@@ -52,7 +91,7 @@ type PredictionResult {
 
     success: Boolean!
     errors: [String]
-    user: User
+    prediction: Prediction
 
 }
 
@@ -65,7 +104,6 @@ type User {
     
     detectors: [Detector]
     predictions: [Prediction]
-    
 
 }
 
@@ -87,14 +125,14 @@ type Prediction {
 
 }
 
-# ---Custom Types---
-
 type Sample {
 
     coordinates: Coordinate!
     climate: Climate!
 
 }
+
+# ---Custom Types---
 
 type Coordinate {
 

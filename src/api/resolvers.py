@@ -5,7 +5,7 @@ from ariadne import convert_kwargs_to_snake_case
 #---Queries---
 
 @convert_kwargs_to_snake_case
-def resolve_get_user(obj, info, user_id: str):
+def resolve_get_user(obj, info, user_id):
     try:
         user = Users.query.get(user_id)
         assert user 
@@ -17,7 +17,7 @@ def resolve_get_user(obj, info, user_id: str):
     except AssertionError:
         payload = {
             'success': False,
-            'errors': [f'User {user_id} not found']
+            'errors': [f'User with ID `{user_id}` not found']
         }
 
     return payload
@@ -25,7 +25,7 @@ def resolve_get_user(obj, info, user_id: str):
 #---Mutations---
 
 @convert_kwargs_to_snake_case
-def resolve_add_user(obj, info, user: Users):
+def resolve_add_user(obj, info, user):
     try:
         with db.session.begin():
             db.session.add(user)
@@ -40,20 +40,51 @@ def resolve_add_user(obj, info, user: Users):
             'success': False,
             'errors': ['Invalid Type']
         }
+    
+    return payload
 
 @convert_kwargs_to_snake_case
-def resolve_update_user(obj, info, new_info: Users):
+def resolve_update_user(obj, info, new_info):
     try:
-        user: Users = Users.query.get(new_info.user_id)
+        user = Users.query.get(new_info.user_id)
         user.__dict__.update(new_info.__dict__)
+        
+        assert user is not None
         
         with db.session.begin():
             db.session.add(user)
             
         payload = {
-            'success': True, 
-            'user': user.to_dict();
+            'success': True,
+            'user': user.to_dict()
         }
         
-    except:
+    except AssertionError:
+        payload = {
+            'success': False,
+            'errors': [f'User with ID `{new_info.user_id}` not found']
+        }
         
+    return payload
+
+@convert_kwargs_to_snake_case
+def resolve_delete_user(obj, info, user_id):
+    try:
+        user = Users.query.get(user_id)
+        assert user is not None
+        
+        with db.session.begin():
+            db.session.delete(user)
+            
+        payload = {
+            'success': True
+        }
+        
+    except AssertionError:
+        payload = {
+            'success': False,
+            'errors': [f'User with ID `{user_id}` not found']
+        }
+        
+    return payload
+

@@ -17,14 +17,16 @@ with app.app_context():
 
 query = ObjectType("Query")
 
-query.set_field("user", resolvers.resolve_add_user)
+query.set_field("user", resolvers.resolve_get_user)
 
 mutation = ObjectType("Mutation")
 mutation.set_field("add_user", resolvers.resolve_add_user)
-mutation.set_field("update_user", resolvers.resolve_add_user)
-mutation.set_field("delete_user", resolvers.resolve_add_user)
+mutation.set_field("update_user", resolvers.resolve_update_user)
+mutation.set_field("delete_user", resolvers.resolve_delete_user)
 
-type_defs = load_schema_from_path("schema.gql")
+type_defs = load_schema_from_path("src/schema.gql")
 schema = make_executable_schema(
-    type_defs, query, snake_case_fallback_resolvers
-)
+    type_defs,
+    query,
+    mutation,
+    snake_case_fallback_resolvers )
