@@ -1,3 +1,4 @@
+from typing import Dict
 from . import db
 
 class Users(db.Model):
@@ -6,7 +7,7 @@ class Users(db.Model):
     user_id: str = db.Column('UserID', db.String, nullable=False, primary_key=True)
     email: str = db.Column('Email', db.String)
     
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         return {
             'user_id': self.user_id,
             'email': self.email
@@ -20,7 +21,7 @@ class Detectors(db.Model):
     
     user_id: str = db.Column(db.ForeignKey('Users.UserID'))
     
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         return {
             'user_id': self.user_id,
             'detector_id': self.detector_id,
@@ -35,7 +36,7 @@ class Predictions(db.Model):
     
     user_id: str = db.Column(db.ForeignKey('Users.UserID'))
     
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         return {
             'user_id': self.user_id,
             'prediction_id': self.prediction_id,
@@ -54,7 +55,7 @@ class Samples(db.Model):
 
     user_id: str = db.Column(db.ForeignKey('Users.UserID'))
     
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         return {
             'user_id': self.user_id,
             'sample_id': self.sample_id,

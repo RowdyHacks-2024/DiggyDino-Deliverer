@@ -2,7 +2,7 @@ from typing import Any, Dict
 from .models import *
 from ariadne import convert_kwargs_to_snake_case
 
-#---Queries---
+#---Single Queries---
 
 @convert_kwargs_to_snake_case
 def resolve_get_user(obj, info, user_id):
@@ -25,7 +25,7 @@ def resolve_get_user(obj, info, user_id):
 @convert_kwargs_to_snake_case
 def resolve_get_detector(obj, info, detector_id):
     try:
-        detector = Users.query.get(detector_id)
+        detector = Detectors.query.get(detector_id)
         assert detector
         payload = {
             'success': True,
@@ -43,7 +43,7 @@ def resolve_get_detector(obj, info, detector_id):
 @convert_kwargs_to_snake_case
 def resolve_get_prediction(obj, info, prediction_id):
     try:
-        prediction = Users.query.get(prediction_id)
+        prediction = Predictions.query.get(prediction_id)
         assert prediction
         payload = {
             'success': True,
@@ -61,7 +61,7 @@ def resolve_get_prediction(obj, info, prediction_id):
 @convert_kwargs_to_snake_case
 def resolve_get_sample(obj, info, sample_id):
     try:
-        sample = Users.query.get(sample_id)
+        sample = Samples.query.get(sample_id)
         assert sample
         payload = {
             'success': True,
@@ -76,6 +76,83 @@ def resolve_get_sample(obj, info, sample_id):
 
     return payload
 
+#---Joined Queries---
+
+@convert_kwargs_to_snake_case
+def resolve_detectors_by_user_id(obj, info, user_id):
+    detectors = db.session.query(
+            Detectors
+        ).filter(
+            Detectors.user_id == user_id
+        ).all()
+
+    payload = []
+
+    try:
+        assert detectors is not []
+
+        payload.extend(
+            {'success': True, 'user': detector.to_dict()}
+            for detector in detectors
+        )
+    except AssertionError:
+            payload.append({
+                'success': False,
+                'errors': [f'The User `{user_id}` has no Detectors']
+            })
+
+    return payload
+
+@convert_kwargs_to_snake_case
+def resolve_predictions_by_user_id(obj, info, user_id):
+    predictions = db.session.query(
+            Detectors
+        ).filter(
+            Detectors.user_id == user_id
+        ).all()
+
+    payload = []
+
+    try:
+        assert predictions is not []
+
+        payload.extend(
+            {'success': True, 'user': prediction.to_dict()}
+            for prediction in predictions
+        )
+    except AssertionError:
+            payload.append({
+                'success': False,
+                'errors': [f'The User `{user_id}` has no Predictions']
+            })
+
+    return payload
+
+@convert_kwargs_to_snake_case
+def resolve_samples_by_user_id(obj, info, user_id):
+    detectors = db.session.query(
+            Detectors
+        ).filter(
+            Detectors.user_id == user_id
+        ).all()
+
+    payload = []
+
+    try:
+        assert detectors is not []
+
+        payload.extend(
+            {'success': True, 'user': detector.to_dict()}
+            for detector in detectors
+        )
+    except AssertionError:
+            payload.append({
+                'success': False,
+                'errors': [f'The User `{user_id}` has no Samples']
+            })
+
+    return payload
+
 #---User Mutations---
 
 @convert_kwargs_to_snake_case
@@ -83,10 +160,12 @@ def resolve_add_user(obj, info, user):
     try:
         with db.session.begin():
             db.session.add(user)
+            
+        print("hey")
         
         payload = {
             'success': True,
-            'user': user.to_dict()
+            'user': dict(user)
         }
         
     except TypeError:
@@ -101,9 +180,9 @@ def resolve_add_user(obj, info, user):
 def resolve_update_user(obj, info, new_info):
     try:
         user = Users.query.get(new_info.user_id)
-        user.__dict__.update(new_info.__dict__)
-        
         assert user is not None
+        user = (new_info)
+        
         
         with db.session.begin():
             db.session.add(user)
@@ -166,10 +245,10 @@ def resolve_add_detector(obj, info, detector):
 @convert_kwargs_to_snake_case
 def resolve_update_detector(obj, info, new_info):
     try:
-        detector = Users.query.get(new_info.detector_id)
-        detector.__dict__.update(new_info.__dict__)
-        
+        detector = Detectors.query.get(new_info.detector_id)
         assert detector is not None
+        detector = (new_info)
+        
         
         with db.session.begin():
             db.session.add(detector)
@@ -190,7 +269,7 @@ def resolve_update_detector(obj, info, new_info):
 @convert_kwargs_to_snake_case
 def resolve_delete_detector(obj, info, detector_id):
     try:
-        detector = Users.query.get(detector_id)
+        detector = Detectors.query.get(detector_id)
         assert detector is not None
         
         with db.session.begin():
@@ -232,10 +311,11 @@ def resolve_add_sample(obj, info, sample):
 @convert_kwargs_to_snake_case
 def resolve_update_sample(obj, info, new_info):
     try:
-        sample = Users.query.get(new_info.sample_id)
-        sample.__dict__.update(new_info.__dict__)
+        sample = Samples.query.get(new_info.sample_id)
         
         assert sample is not None
+        sample = (new_info)
+
         
         with db.session.begin():
             db.session.add(sample)
@@ -256,7 +336,7 @@ def resolve_update_sample(obj, info, new_info):
 @convert_kwargs_to_snake_case
 def resolve_delete_sample(obj, info, sample_id):
     try:
-        sample = Users.query.get(sample_id)
+        sample = Samples.query.get(sample_id)
         assert sample is not None
         
         with db.session.begin():
@@ -298,10 +378,10 @@ def resolve_add_prediction(obj, info, prediction):
 @convert_kwargs_to_snake_case
 def resolve_update_prediction(obj, info, new_info):
     try:
-        prediction = Users.query.get(new_info.prediction_id)
-        prediction.__dict__.update(new_info.__dict__)
-        
+        prediction = Predictions.query.get(new_info.prediction_id)        
         assert prediction is not None
+        prediction = (new_info)
+        
         
         with db.session.begin():
             db.session.add(prediction)
@@ -322,7 +402,7 @@ def resolve_update_prediction(obj, info, new_info):
 @convert_kwargs_to_snake_case
 def resolve_delete_prediction(obj, info, prediction_id):
     try:
-        prediction = Users.query.get(prediction_id)
+        prediction = Predictions.query.get(prediction_id)
         assert prediction is not None
         
         with db.session.begin():
