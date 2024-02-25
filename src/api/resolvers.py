@@ -40,6 +40,42 @@ def resolve_get_detector(obj, info, detector_id):
 
     return payload
 
+@convert_kwargs_to_snake_case
+def resolve_get_prediction(obj, info, prediction_id):
+    try:
+        prediction = Users.query.get(prediction_id)
+        assert prediction
+        payload = {
+            'success': True,
+            'user': prediction.to_dict()
+        }
+
+    except AssertionError:
+        payload = {
+            'success': False,
+            'errors': [f'Prediction with ID `{prediction_id}` not found']
+        }
+
+    return payload
+
+@convert_kwargs_to_snake_case
+def resolve_get_sample(obj, info, sample_id):
+    try:
+        sample = Users.query.get(sample_id)
+        assert sample
+        payload = {
+            'success': True,
+            'user': sample.to_dict()
+        }
+
+    except AssertionError:
+        payload = {
+            'success': False,
+            'errors': [f'Sample with ID `{sample_id}` not found']
+        }
+
+    return payload
+
 #---User Mutations---
 
 @convert_kwargs_to_snake_case

@@ -23,6 +23,10 @@ with app.app_context():
 query = ObjectType("Query")
 
 query.set_field("get_user", resolvers.resolve_get_user)
+query.set_field("get_detector", resolvers.resolve_get_detector)
+query.set_field("get_prediction", resolvers.resolve_get_prediction)
+query.set_field("get_sample", resolvers.resolve_get_sample)
+
 
 mutation = ObjectType("Mutation")
 
