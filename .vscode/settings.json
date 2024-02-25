@@ -1,0 +1,13 @@
+{
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "DinoDb",
+            "database": "${workspaceFolder:DiggyDino-Deliverer}/dino.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

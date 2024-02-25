@@ -4,8 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+ariadne = "*"
+uvicorn = "*"
+flask = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "2.7"
+
+[scripts]
+start_api = "uvicorn src.main:app --interface wsgi"

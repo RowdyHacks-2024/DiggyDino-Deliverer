@@ -1,0 +1,104 @@
+#---Schema---
+
+schema {
+
+    query: Query
+    mutation: Mutation
+
+}
+
+#---Basis---
+
+type Query {
+
+    user: [UserResult]!
+
+}
+
+type Mutation {
+
+    add_user()
+
+}
+
+#---Results---
+
+type UserResult {
+
+    success: boolean!
+    errors: [String]
+    user: User
+
+}
+
+type DetectorResult {
+
+    success: boolean!
+    errors: [String]
+    user: User
+
+}
+
+type PredictionResult {
+
+    success: boolean!
+    errors: [String]
+    user: User
+
+}
+
+# ---Tables---
+
+type User {
+    
+    user_id: Integer!
+    username: String!
+    email: String!
+    
+    detectors: [Detector]
+    predictions: [Prediction]
+    
+
+}
+
+type Detector {
+
+    user_id: Integer!
+    detector_id: Integer!
+    detector_name: String!
+
+}
+
+type Prediction {
+
+    user_id: Integer!
+    prediction_id: Integer!
+
+    is_valid: Boolean!
+    sample_set: [Sample]!
+
+}
+
+# ---Custom Types---
+
+type Sample {
+
+    coordinates: Coordinate!
+    climate: Climate!
+
+}
+
+type Coordinate {
+
+    longitude: Float!
+    latitude: Float!
+
+}
+
+type Climate {
+
+    temperature: Float!
+    barametric_pressure: Float!
+    altitude: Float!
+
+}
